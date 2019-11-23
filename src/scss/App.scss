@@ -1,6 +1,10 @@
 $enable-gradients: true;
 $headings-font-weight: 700;
 $headings-margin-bottom: 1rem;
+$primary: #e60000;
+//$secondary: #8f8e8e;
+$dark: #1e1e1e;
+$custom-range-track-bg: #8f8e8e;
 
 @import '~bootstrap/scss/bootstrap.scss';
 
@@ -17,5 +21,13 @@ img {
   max-width: 100%;
 }
 .App {
-  flex-grow: 1;
+  //flex-grow: 1;
+}
+.drum-pad {
+  height: 100px;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+.jumbotron {
+
 }
