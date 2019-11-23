@@ -70,7 +70,7 @@ class App extends React.Component {
         <Navbar brand={'Killer Drum Machine'} />
         <main role="main" className="App container my-auto py-3">
           <div id="drum-machine" className="row">
-            <div className="col-lg-8">
+            <div className="col-lg-8 mb-4 mb-lg-0">
               <div className="form-row">
                 <div className="col-4 mb-2">
                   <button type="button" className="drum-pad btn btn-dark btn-block">Q</button>
@@ -102,12 +102,12 @@ class App extends React.Component {
               </div>
             </div>
             <div className="col-lg-4">
-              <div className="jumbotron h-100 p-4 border">
+              <div className="jumbotron p-4 border mb-0">
                 <div className="form-group">
                   <label htmlFor="volumeControl">Volume</label>
                   <input type="range" className="custom-range" id="volumeControl" />
                 </div>
-                <div className="alert alert-dark text-center" role="alert">
+                <div className="alert alert-dark text-center mb-0" role="alert">
                   <b>Current Pad Title</b>
                 </div>
               </div>
