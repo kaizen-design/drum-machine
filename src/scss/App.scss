@@ -23,7 +23,7 @@ img {
 .App {
   .jumbotron {
     @include media-breakpoint-up(lg) {
-      height: 100%;
+      height: calc(100% - 0.5rem);
     }
   }
 }
