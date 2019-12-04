@@ -51,11 +51,18 @@ const audioBank = [
   }
 ];
 
+const inactiveState = 'drum-pad btn btn-block btn-dark';
+const activeState = 'drum-pad btn btn-block btn-dark focus active';
+
 class DrumPad extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      buttonStyle: inactiveState
+    };
     this.playSound = this.playSound.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.activatePad = this.activatePad.bind(this);
   }
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyPress);
@@ -68,21 +75,36 @@ class DrumPad extends React.Component {
       this.playSound();
     }
   }
+  activatePad() {
+    if (this.state.buttonStyle === inactiveState) {
+      this.setState({
+        buttonStyle: activeState
+      });
+    } else {
+      this.setState({
+        buttonStyle: inactiveState
+      });
+    }
+  }
   playSound() {
     const sound = document.getElementById(this.props.keyTrigger);
     sound.currentTime = 0;
     sound.play();
     this.props.updateDisplay(this.props.clipId.replace(/-/g, ' '));
+    this.activatePad();
+    setTimeout(() => this.activatePad(), 100);
   }
   render() {
     return (
-      <button type="button"
-              id={this.props.clipId}
-              onClick={this.playSound}
-              className="drum-pad btn btn-dark btn-block">
-        <audio className='clip' id={this.props.keyTrigger} src={this.props.clip} />
-        {this.props.keyTrigger}
-      </button>
+      <div className="col-4 mb-2">
+        <button type="button"
+                id={this.props.clipId}
+                onClick={this.playSound}
+                className={this.state.buttonStyle}>
+          <audio className='clip' id={this.props.keyTrigger} src={this.props.clip} />
+          {this.props.keyTrigger}
+        </button>
+      </div>
     );
   }
 }
@@ -117,14 +139,13 @@ class App extends React.Component {
   render() {
     const padBank = audioBank.map((el) => {
       return (
-        <div className="col-4 mb-2">
-          <DrumPad
-            clipId={el.id}
-            clip={el.url}
-            keyTrigger={el.keyTrigger}
-            keyCode={el.keyCode}
-            updateDisplay={this.updateDisplay} />
-        </div>
+        <DrumPad
+          key={el.id}
+          clipId={el.id}
+          clip={el.url}
+          keyTrigger={el.keyTrigger}
+          keyCode={el.keyCode}
+          updateDisplay={this.updateDisplay} />
       )
     });
     const clips = [].slice.call(document.getElementsByClassName('clip'));
