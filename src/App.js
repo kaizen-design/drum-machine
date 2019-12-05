@@ -2,6 +2,8 @@ import React from 'react';
 import Navbar from './templates/layout/Navbar';
 import Footer from './templates/layout/Footer';
 
+const projectName = 'Drum Machine';
+
 const audioBank = [
   {
     keyCode: 81,
@@ -179,7 +181,7 @@ class App extends React.Component {
     });
     return (
       <div className="h-100 d-flex flex-column">
-        <Navbar brand={'Drum Machine'} />
+        <Navbar brand={projectName} />
         <main role="main" className="App container my-auto py-3">
           <div id="drum-machine" className="row">
             <div className="col-lg-8 mb-4 mb-lg-0">
