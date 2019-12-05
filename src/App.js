@@ -51,6 +51,26 @@ const audioBank = [
   }
 ];
 
+function PadBank(props) {
+  const padBank = audioBank.map((el) => {
+    return (
+      <div className="col-4 mb-2" key={el.id}>
+        <DrumPad
+          clipId={el.id}
+          clip={el.url}
+          keyTrigger={el.keyTrigger}
+          keyCode={el.keyCode}
+          updateDisplay={props.updateDisplay} />
+      </div>
+    )
+  });
+  return (
+    <div className="pad-bank form-row">
+      {padBank}
+    </div>
+  )
+}
+
 class DrumPad extends React.Component {
   constructor(props) {
     super(props);
@@ -104,6 +124,27 @@ class DrumPad extends React.Component {
   }
 }
 
+function PadControls(props) {
+  return (
+    <div className="jumbotron p-4 border mb-0">
+      <div className="form-group">
+        <label htmlFor="volumeControl">Volume</label>
+        <input type="range"
+               className="custom-range"
+               id="volumeControl"
+               min="0"
+               max="1"
+               step="0.01"
+               value={props.volume}
+               onChange={props.adjustVolume} />
+      </div>
+      <div id="display" className="alert alert-dark text-center mb-0" role="alert">
+        <b>{props.display}</b>
+      </div>
+    </div>
+  )
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -132,18 +173,6 @@ class App extends React.Component {
     });
   }
   render() {
-    const padBank = audioBank.map((el) => {
-      return (
-        <div className="col-4 mb-2" key={el.id}>
-          <DrumPad
-            clipId={el.id}
-            clip={el.url}
-            keyTrigger={el.keyTrigger}
-            keyCode={el.keyCode}
-            updateDisplay={this.updateDisplay} />
-        </div>
-      )
-    });
     const clips = [].slice.call(document.getElementsByClassName('clip'));
     clips.forEach(sound => {
       sound.volume = this.state.volume
@@ -154,27 +183,12 @@ class App extends React.Component {
         <main role="main" className="App container my-auto py-3">
           <div id="drum-machine" className="row">
             <div className="col-lg-8 mb-4 mb-lg-0">
-              <div className="pad-bank form-row">
-                {padBank}
-              </div>
+              <PadBank updateDisplay={this.updateDisplay} />
             </div>
             <div className="col-lg-4">
-              <div className="jumbotron p-4 border mb-0">
-                <div className="form-group">
-                  <label htmlFor="volumeControl">Volume</label>
-                  <input type="range"
-                         className="custom-range"
-                         id="volumeControl"
-                         min="0"
-                         max="1"
-                         step="0.01"
-                         value={this.state.volume}
-                         onChange={this.adjustVolume} />
-                </div>
-                <div id="display" className="alert alert-dark text-center mb-0" role="alert">
-                  <b>{this.state.display}</b>
-                </div>
-              </div>
+              <PadControls volume={this.state.volume}
+                        adjustVolume={this.adjustVolume}
+                        display={this.state.display} />
             </div>
           </div>
         </main>
